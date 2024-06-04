@@ -1,35 +1,56 @@
 "use client";
-import React, { useEffect, useState } from "react";
 
-const Users = () => {
-  const [user, setUser] = useState({ results: [] });
+import React, { useState, useEffect } from "react";
 
-  const fetchInfo = () => {
-    fetch("https://randomuser.me/api")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("API response:", data); 
-        setUser(data);
-      })
-      .catch((error) => console.error(error));
-  };
+const Users = ({ initialData }: any) => {
+  const [data, setData] = useState(initialData || []);
 
   useEffect(() => {
-    fetchInfo();
+    if (!initialData) {
+      fetchData();
+    }
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://randomuser.me/api");
+      const json = await response.json();
+      setData(json.results);
+
+      // Store the fetched data in local storage
+      localStorage.setItem("userData", JSON.stringify(json.results));
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
-    <>
-      {user.results.map((emp: any, i: any) => {
-        return (
-          <ul key={i}>
-            <li>
-              {emp.name.title} {emp.name.first} {emp.name.last} {emp.dob.age}
+    <div>
+      <h1>User List</h1>
+      {data.length > 0 && (
+        <ul>
+          {data.map((user: any, index: any) => (
+            <li key={index}>
+              <img src={user.picture.thumbnail} alt="User Thumbnail" />
+              <div>
+                <p>
+                  Name:{" "}
+                  {`${user.name.title} ${user.name.first} ${user.name.last}`}
+                </p>
+                <p>Gender: {user.gender}</p>
+                <p>Age: {user.dob.age}</p>
+                <p>Email: {user.email}</p>
+                <p>
+                  Location:{" "}
+                  {`${user.location.city}, ${user.location.state}, ${user.location.country}`}
+                </p>
+                <p>Phone: {user.phone}</p>
+              </div>
             </li>
-          </ul>
-        );
-      })}
-    </>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 
