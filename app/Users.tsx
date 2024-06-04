@@ -28,24 +28,28 @@ const Users = ({ initialData }: any) => {
     <div>
       <h2 className="text-2xl font-medium font-sans">User List</h2>
       {data.length > 0 && (
-        <div className="bg-gradient-to-r from-sky-500 to-indigo-500 p-5 bg-gradient-to-l hover:bg-gradient-to-r">
+        <div className=" rounded from-sky-500 to-indigo-500 p-5 bg-gradient-to-l hover:bg-gradient-to-r">
           <ul>
             {data.map((user: any, index: any) => (
               <li key={index}>
-                <img src={user.picture.thumbnail} alt="User Thumbnail" />
+                <img
+                  src={user.picture.thumbnail}
+                  alt="User Thumbnail"
+                  className="p-1"
+                />
                 <div>
-                  <p>
+                  <p className="p-1">
                     Name:{" "}
                     {`${user.name.title} ${user.name.first} ${user.name.last}`}
                   </p>
-                  <p>Gender: {user.gender}</p>
-                  <p>Age: {user.dob.age}</p>
-                  <p>Email: {user.email}</p>
-                  <p>
+                  <p className="p-1">Gender: {user.gender}</p>
+                  <p className="p-1">Age: {user.dob.age}</p>
+                  <p className="p-1">Email: {user.email}</p>
+                  <p className="p-1">
                     Location:{" "}
                     {`${user.location.city}, ${user.location.state}, ${user.location.country}`}
                   </p>
-                  <p>Phone: {user.phone}</p>
+                  <p className="p-1">Phone: {user.phone}</p>
                 </div>
               </li>
             ))}
