@@ -7,9 +7,17 @@ const prisma = new PrismaClient();
 export async function DELETE(req: NextRequest) {
   try {
     const { query } = parse(req.url, true);
+    const { id } = query;
+
+    if (typeof id !== "string") {
+      return NextResponse.json(
+        { error: "Invalid parameters" },
+        { status: 400 }
+      );
+    }
     const allUsers = await prisma.user.delete({
       where: {
-        id: query.id,
+        id: id,
       },
     });
 
