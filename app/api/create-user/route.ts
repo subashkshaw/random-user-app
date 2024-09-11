@@ -9,10 +9,16 @@ export async function POST(req: NextRequest) {
     const { data } = await axios.get("https://randomuser.me/api");
     console.log(data, "User Data");
 
+    const result = data.results[0];
+    if (!result || !result.name || !result.dob) {
+      throw new Error("Invalid data format");
+    }
+
     const {
       name: { first, last },
       dob: { age },
-    } = data.results[0];
+    } = result;
+
     console.log(first, last, age, "User info");
 
     const newUser = await prisma.user.create({
