@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 export async function DELETE(req: NextRequest) {
   try {
     const url = new URL(req.url);
-    const query = url.searchParams;
-    const id = query.get("id");
+    const id = url.searchParams.get("id");
 
     if (!id || typeof id !== "string") {
       return NextResponse.json(
