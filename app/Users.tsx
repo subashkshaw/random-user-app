@@ -51,7 +51,17 @@ const Users = ({ initialData }: any) => {
       console.error("Error creating user:", error);
     }
   };
+  const handleEditClick = (user: any) => {
+    setSelectedUser(user);
+    setIsModalOpen(true);
+  };
 
+  const handleSave = (updatedUser: any) => {
+    setData(
+      data.map((user: any) => (user.id === updatedUser.id ? updatedUser : user))
+    );
+    setIsModalOpen(false);
+  };
   useEffect(() => {
     if (!initialData) {
       fetchData();
@@ -68,18 +78,6 @@ const Users = ({ initialData }: any) => {
     } catch (error) {
       console.error("Error fetching data:", error);
     }
-  };
-
-  const handleEditClick = (user: any) => {
-    setSelectedUser(user);
-    setIsModalOpen(true);
-  };
-
-  const handleSave = (updatedUser: any) => {
-    setData(
-      data.map((user: any) => (user.id === updatedUser.id ? updatedUser : user))
-    );
-    setIsModalOpen(false);
   };
 
   return (

@@ -1,13 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { parse } from "url";
 
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const query = url.searchParams;
-    const id = query.get("id");
+    const { query } = parse(req.url, true);
+    const id = query;
 
     if (!id || typeof id !== "string") {
       return NextResponse.json(

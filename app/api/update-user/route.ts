@@ -8,18 +8,6 @@ export async function PUT(req: NextRequest) {
     const body = await req.json();
     const { id, firstName, lastName, age } = body;
 
-    if (
-      typeof id !== "string" ||
-      typeof firstName !== "string" ||
-      typeof lastName !== "string" ||
-      typeof age !== "number"
-    ) {
-      return NextResponse.json(
-        { error: "Invalid parameters" },
-        { status: 400 }
-      );
-    }
-
     const ageInt = parseInt(age as any, 10);
 
     const updatedUser = await prisma.user.update({

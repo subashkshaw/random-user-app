@@ -1,23 +1,15 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
+import { parse } from "url";
 
 const prisma = new PrismaClient();
 
 export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const query = url.searchParams;
+    const { query } = parse(req.url, true);
 
-    const sortBy = query.get("sortBy") || "firstName";
-    const sortOrder = query.get("sortOrder") || "asc";
-
-    const validFields = ["firstName", "lastName", "age"];
-    if (!validFields.includes(sortBy) || !["asc", "desc"].includes(sortOrder)) {
-      return NextResponse.json(
-        { error: "Invalid sort parameters" },
-        { status: 400 }
-      );
-    }
+    const sortBy: any = query.sortBy;
+    const sortOrder: any = query.sortOrder;
 
     const allUsers = await prisma.user.findMany({
       orderBy: {
@@ -25,10 +17,7 @@ export async function GET(req: NextRequest) {
       },
     });
 
-    return NextResponse.json(
-      { allUsers, query: Object.fromEntries(query.entries()) },
-      { status: 200 }
-    );
+    return NextResponse.json({ allUsers }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
