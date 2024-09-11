@@ -11,8 +11,16 @@ export async function GET(req: NextRequest) {
     const sortBy = query.get("sortBy") || "firstName";
     const sortOrder = query.get("sortOrder") || "asc";
 
-    if (typeof sortBy !== "string" || !["asc", "desc"].includes(sortOrder)) {
-      throw new Error("Invalid sort parameters");
+    // Validate sort parameters
+    const validSortFields = ["firstName", "lastName", "age"]; // Example valid fields
+    if (
+      !validSortFields.includes(sortBy) ||
+      !["asc", "desc"].includes(sortOrder)
+    ) {
+      return NextResponse.json(
+        { error: "Invalid sort parameters" },
+        { status: 400 }
+      );
     }
 
     const allUsers = await prisma.user.findMany({
@@ -22,13 +30,13 @@ export async function GET(req: NextRequest) {
     });
 
     return NextResponse.json(
-      { allUsers, query: Object.fromEntries(query) },
+      { allUsers, query: Object.fromEntries(query.entries()) },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
-      { error: "An error occurred while processing the request." },
+      { error: "An error occurred while processing the get request." },
       { status: 500 }
     );
   }
