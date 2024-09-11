@@ -79,28 +79,28 @@ const Users = ({ initialData }: any) => {
     setData(
       data.map((user: any) => (user.id === updatedUser.id ? updatedUser : user))
     );
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   return (
     <div>
       <h2 className="text-2xl font-medium font-sans">All Users</h2>
       <button
-        className="border border-slate-500  from-sky-500 to-indigo-500 p-2  bg-gradient-to-l hover:bg-gradient-to-r my-2"
+        className="border text-white border-slate-500  from-sky-500 to-indigo-500 p-2  bg-gradient-to-l hover:bg-gradient-to-r my-2"
         onClick={handleCreate}
       >
         Generate User
       </button>
       {data && (
         <table className="table-auto w-full text-left border-spacing-4 border border-slate-500  from-sky-500 to-indigo-500 p-5 bg-gradient-to-l hover:bg-gradient-to-r">
-          <thead>
+          <thead className="text-white">
             <tr>
               <th className="border border-slate-600 p-2">
                 <span className="flex items-center">
                   Name{" "}
                   <BiSort
                     onClick={handleNameToggle}
-                    className={`mx-3 ${!nameAsc && "scale-x-[-1]"}`}
+                    className={`mx-3 text-white ${!nameAsc && "scale-x-[-1]"}`}
                   />
                 </span>
               </th>
@@ -109,7 +109,7 @@ const Users = ({ initialData }: any) => {
                   Age{" "}
                   <BiSort
                     onClick={handleAgeToggle}
-                    className={`mx-3 ${!ageAsc && "scale-x-[-1]"}`}
+                    className={`mx-3 text-white ${!ageAsc && "scale-x-[-1]"}`}
                   />
                 </span>
               </th>
@@ -125,10 +125,16 @@ const Users = ({ initialData }: any) => {
                 </td>
                 <td className="border border-slate-700  p-2">{`${user.age}`}</td>
                 <td className="border border-slate-700  p-2">
-                  <FiEdit onClick={() => handleEditClick(user)} />
+                  <FiEdit
+                    className="text-white"
+                    onClick={() => handleEditClick(user)}
+                  />
                 </td>
                 <td className="border border-slate-700  p-2">
-                  <RiDeleteBin6Line onClick={() => handleDelete(user.id)} />
+                  <RiDeleteBin6Line
+                    className="text-white"
+                    onClick={() => handleDelete(user.id)}
+                  />
                 </td>
               </tr>
             ))}

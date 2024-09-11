@@ -11,12 +11,8 @@ export async function GET(req: NextRequest) {
     const sortBy = query.get("sortBy") || "firstName";
     const sortOrder = query.get("sortOrder") || "asc";
 
-    // Validate sort parameters
-    const validSortFields = ["firstName", "lastName", "age"]; // Example valid fields
-    if (
-      !validSortFields.includes(sortBy) ||
-      !["asc", "desc"].includes(sortOrder)
-    ) {
+    const validFields = ["firstName", "lastName", "age"];
+    if (!validFields.includes(sortBy) || !["asc", "desc"].includes(sortOrder)) {
       return NextResponse.json(
         { error: "Invalid sort parameters" },
         { status: 400 }
