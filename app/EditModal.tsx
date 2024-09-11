@@ -34,7 +34,7 @@ const EditUserModal = ({ user, onClose, onSave }: any) => {
               type="text"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
-              className="border rounded w-full p-2"
+              className="border rounded w-full p-2 text-blue-600"
             />
           </div>
           <div className="mb-4">
@@ -43,7 +43,7 @@ const EditUserModal = ({ user, onClose, onSave }: any) => {
               type="text"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
-              className="border rounded w-full p-2"
+              className="border rounded w-full p-2 text-blue-600"
             />
           </div>
           <div className="mb-4">
@@ -52,7 +52,7 @@ const EditUserModal = ({ user, onClose, onSave }: any) => {
               type="number"
               value={age}
               onChange={(e) => setAge(Number(e.target.value))}
-              className="border rounded w-full p-2"
+              className="border rounded w-full p-2 text-blue-600"
             />
           </div>
           <div className="flex justify-end">

@@ -7,17 +7,10 @@ const prisma = new PrismaClient();
 export async function DELETE(req: NextRequest) {
   try {
     const { query } = parse(req.url, true);
-    const id = query;
-
-    if (!id || typeof id !== "string") {
-      return NextResponse.json(
-        { error: "ID is required and must be a string." },
-        { status: 400 }
-      );
-    }
+    const id = query.id || "";
 
     const deletedUser = await prisma.user.delete({
-      where: { id },
+      where: { id: id.toString() },
     });
 
     return NextResponse.json({ deletedUser }, { status: 200 });
