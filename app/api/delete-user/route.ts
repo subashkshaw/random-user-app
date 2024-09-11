@@ -1,27 +1,26 @@
 import { PrismaClient } from "@prisma/client";
 import { NextRequest, NextResponse } from "next/server";
-import { parse } from "url";
 
 const prisma = new PrismaClient();
 
 export async function DELETE(req: NextRequest) {
   try {
-    const { query } = parse(req.url, true);
-    const id = query.id;
+    const url = new URL(req.url);
+    const query = url.searchParams;
+    const id = query.get("id");
 
-    if (typeof id !== "string") {
+    if (!id || typeof id !== "string") {
       return NextResponse.json(
-        { error: "Invalid parameters" },
+        { error: "ID is required and must be a string." },
         { status: 400 }
       );
     }
-    const deleteUsers = await prisma.user.delete({
-      where: {
-        id: id,
-      },
+
+    const deletedUser = await prisma.user.delete({
+      where: { id },
     });
 
-    return NextResponse.json(deleteUsers, { status: 200 });
+    return NextResponse.json({ deletedUser }, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
