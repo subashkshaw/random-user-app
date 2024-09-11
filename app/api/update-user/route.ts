@@ -37,7 +37,7 @@ export async function PUT(req: NextRequest) {
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
-      { error: "An error occurred while processing the request." },
+      { error: "An error occurred while processing the update request." },
       { status: 500 }
     );
   }

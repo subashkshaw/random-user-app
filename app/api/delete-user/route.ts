@@ -7,7 +7,7 @@ const prisma = new PrismaClient();
 export async function DELETE(req: NextRequest) {
   try {
     const { query } = parse(req.url, true);
-    const { id } = query;
+    const id = query.id;
 
     if (typeof id !== "string") {
       return NextResponse.json(
@@ -15,17 +15,17 @@ export async function DELETE(req: NextRequest) {
         { status: 400 }
       );
     }
-    const allUsers = await prisma.user.delete({
+    const deleteUsers = await prisma.user.delete({
       where: {
         id: id,
       },
     });
 
-    return NextResponse.json(allUsers, { status: 200 });
+    return NextResponse.json(deleteUsers, { status: 200 });
   } catch (error) {
     console.error("Error:", error);
     return NextResponse.json(
-      { error: "An error occurred while processing the request." },
+      { error: "An error occurred while processing the delete request." },
       { status: 500 }
     );
   }
